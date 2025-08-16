@@ -1,53 +1,46 @@
-import { Dispatch } from "react";
-
+import React from 'react';
 
 type CellProps = {
     id: number;
     go: string;
-    setGo: Dispatch<React.SetStateAction<string>>;
+    setGo: React.Dispatch<React.SetStateAction<string>>;
     cells: string[];
-    setCells: Dispatch<React.SetStateAction<string[]>>;
+    setCells: React.Dispatch<React.SetStateAction<string[]>>;
     cell: string;
-    winningMatch: string;
-}
+    winningMessage: string;
+};
 
-
-const Cell = ({ id, go, setGo, cells, setCells, cell, winningMatch }: CellProps) => {
-
+const Cell = ({ id, go, setGo, cells, setCells, cell, winningMessage }: CellProps) => {
     const handleClick = () => {
-
-        if (winningMatch) {
+        if (winningMessage) {
             return;
         }
         
         const notTaken = !cells[id];
         if (notTaken) {
-
-        
-            if(go === "circle" ) {
-                cellChange("circle")
+            if (go === "circle") {
+                handleCellChange("circle");
                 setGo("cross");
-            } else if(go === "cross") {
-                cellChange("cross")
+            } else if (go === "cross") {
+                handleCellChange("cross");
                 setGo("circle");
             }
         }
-    }
+    };
 
-    const cellChange =  (celltoChange: string) => {
+    const handleCellChange = (cellValue: string) => {
         let newCells = [...cells];
-        newCells[id] = celltoChange;
+        newCells[id] = cellValue;
         setCells(newCells);
-    }
+    };
+
     return (
         <div className="square" onClick={handleClick}>
             <div className={cell}>
-                {cell ? (cell === "circle" ? "O" : "X" ) : ""}
+                {cell ? (cell === "circle" ? "O" : "X") : ""}
             </div>
         </div>
     );
-}
-
-
+};
 
 export default Cell;
